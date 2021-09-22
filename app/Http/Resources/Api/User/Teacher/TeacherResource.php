@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Http\Resources\Api\Department;
+namespace App\Http\Resources\Api\User\Teacher;
 
-use App\Http\Resources\Api\User\ManagerResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class DepartmentResource extends JsonResource
+class TeacherResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -18,7 +17,7 @@ class DepartmentResource extends JsonResource
         return [
             'id' => $this->second_id,
             'name' => $this->name,
-            'description' => $this->description,
+            'email' => $this->email
         ];
     }
 }

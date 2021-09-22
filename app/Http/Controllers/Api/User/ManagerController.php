@@ -37,9 +37,9 @@ class ManagerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($secondId)
     {
-        return UserResource::make(User::where('status', UserStatusEnum::MANAGER)->findOrFail($id));
+        return UserResource::make(User::where('status', UserStatusEnum::MANAGER)->where('second_id', $secondId)->firstOrFail());
     }
 
     /**

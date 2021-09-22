@@ -14,6 +14,12 @@ class DisciplineResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->second_id,
+            'name' => $this->name,
+            'description' => $this->descriptions,
+            'number_of_labs' => $this->number_of_labs,
+            'number_of_practices' => $this->number_of_practices
+        ];
     }
 }

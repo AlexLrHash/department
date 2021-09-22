@@ -34,12 +34,12 @@ class TeacherController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int  $secondId
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($secondId)
     {
-        return UserResource::make(User::where('status', UserStatusEnum::TEACHER)->findOrFail($id));
+        return UserResource::make(User::where('status', UserStatusEnum::TEACHER)->where('second_id', $secondId)->firstOrFail());
     }
 
     /**
@@ -65,8 +65,15 @@ class TeacherController extends Controller
         //
     }
 
-
-    public function getDisciplines()
+    public function getGroupedTeachersByDepartments()
     {
+        $groupedTeachersByDepartments = [];
+
+        $teachers = User::where('status', UserStatusEnum::TEACHER)->get();
+        foreach ($teachers as $teacher) {
+            $groupedTeachersByDepartments[$teacher->department->id][] = $teacher;
+        }
+
+        return $groupedTeachersByDepartments;
     }
 }

@@ -18,5 +18,10 @@ class DepartmentTableSeeder extends Seeder
             'name' => 'Лесники',
             'manager_id' => 2
         ]);
+
+        Department::create([
+            'name' => 'Информационные технологии',
+            'manager_id' => 2
+        ]);
     }
 }

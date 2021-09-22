@@ -15,6 +15,7 @@ class RegisterController extends Controller
      *
      * @param RegisterRequest $request
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     * #TODO подтверждение email
      */
     public function register(RegisterRequest $request)
     {

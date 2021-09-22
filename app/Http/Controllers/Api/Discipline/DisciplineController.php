@@ -2,9 +2,15 @@
 
 namespace App\Http\Controllers\Api\Discipline;
 
+use App\Classes\Enum\UserStatusEnum;
+use App\Http\Controllers\Api\User\TeacherController;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Api\Discipline\DisciplineResource;
+use App\Http\Resources\Api\User\Teacher\TeacherResource;
+use App\Http\Resources\Api\User\UserResource;
 use App\Models\Discipline;
+use App\Models\User;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -37,9 +43,9 @@ class DisciplineController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($disciplineSecondId)
     {
-        return DisciplineResource::make(Discipline::findOrFail($id));
+        return DisciplineResource::make(Discipline::findOrFail($disciplineSecondId));
     }
 
     /**
@@ -84,5 +90,18 @@ class DisciplineController extends Controller
         ];
 
         return response()->download($file, 'test.pdf', $headers);
+    }
+
+    /**
+     * Generate Disciplines teachers
+     *
+     * @param $disciplineSecondId
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     */
+    public function teachers($disciplineSecondId)
+    {
+        $discipline = Discipline::where('second_id', $disciplineSecondId)->firstOrFail();
+
+        return TeacherResource::collection($discipline->teachers);
     }
 }

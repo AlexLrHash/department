@@ -19,26 +19,20 @@ class UserTableSeeder extends Seeder
         $this->createManagers();
         $this->createTeachers();
     }
-
+    #TODO factory
     public function createTeachers()
     {
-        User::create([
-            'name' => 'Анастасия',
-            'email' => 'superuser@gmail.com',
-            'password' => Hash::make('secret'),
-            'department_id' => 1,
-            'status' => UserStatusEnum::TEACHER
+        User::factory()->count(5)->create([
+            'status' => UserStatusEnum::TEACHER,
+            'department_id' => rand(0, 2)
         ]);
     }
 
     public function createManagers()
     {
-        User::create([
-            'name' => 'Алексей',
-            'email' => 'ryzhakovalexeynicol@gmail.com',
-            'password' => Hash::make('secret'),
-            'department_id' => 1,
-            'status' => UserStatusEnum::MANAGER
+        User::factory()->count(5)->create([
+            'status' => UserStatusEnum::MANAGER,
+            'department_id' => rand(0, 2)
         ]);
     }
 }
