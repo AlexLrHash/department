@@ -8,6 +8,6 @@
     <title>Document</title>
 </head>
 <body>
-    Ваш ключ - {{ $verification_token }}
+    Ваш ключ - {{ $verify_token }}
 </body>
 </html>

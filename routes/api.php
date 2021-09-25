@@ -19,11 +19,14 @@ use Illuminate\Support\Facades\Route;
 Route::group(['middleware' => 'auth:sanctum'], function() {
     Route::get('/user', [\App\Http\Controllers\Api\User\ProfileController::class, 'getUser'])->name('user.profile');
     Route::post('/user/profile/update', [\App\Http\Controllers\Api\User\ProfileController::class, 'updateProfile'])->name('user.profile.name');
+
+    Route::post('/user/token/verify/resend', [\App\Http\Controllers\Api\Auth\RegisterController::class, 'resendEmail'])->name('user.token.verify.resend');
+    Route::get('/user/token/verify/{verificationToken}', [\App\Http\Controllers\Api\Auth\RegisterController::class, 'verifyEmail'])->name('auth.token.verify');
+
 });
 
 // TODO middleware for cross-server request
 Route::post('/register', [\App\Http\Controllers\Api\Auth\RegisterController::class, 'register'])->name('auth.register');
-Route::get('/token/verify/{verificationToken}', [\App\Http\Controllers\Api\Auth\RegisterController::class, 'verifyEmail'])->name('auth.token.verify');
 Route::post('/login', [\App\Http\Controllers\Api\Auth\LoginController::class, 'login'])->name('auth.login');
 
 Route::get('/departments', [\App\Http\Controllers\Api\Department\DepartmentController::class, 'index'])->name('disciplines.index');

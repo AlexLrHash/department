@@ -11,16 +11,16 @@ class VerifyUserEmail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    protected $verificationToken;
+    protected $verifyToken;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($verificationToken)
+    public function __construct($verifyToken)
     {
-        $this->verificationToken = $verificationToken;
+        $this->verifyToken = $verifyToken;
     }
 
     /**
@@ -30,8 +30,8 @@ class VerifyUserEmail extends Mailable
      */
     public function build()
     {
-        $verificationToken = $this->verificationToken;
+        $verifyToken = $this->verifyToken;
 
-        return $this->view('mail.verify_email', ['verification_token' => $verificationToken]);
+        return $this->view('mail.verify_email', ['verify_token' => $verifyToken]);
     }
 }

@@ -10,6 +10,7 @@ use App\Jobs\SendEmailVerificationJob;
 use App\Jobs\SendVerificationTokenEmail;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
@@ -20,7 +21,6 @@ class RegisterController extends Controller
      *
      * @param RegisterRequest $request
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
-     * #TODO подтверждение email
      */
     public function register(RegisterRequest $request)
     {
@@ -49,14 +49,14 @@ class RegisterController extends Controller
     /**
      * Верификация по email
      *
-     * @param $verificationToken
+     * @param $verify_token
      * @return UserResource
      */
-    public function verifyEmail($verificationToken)
+    public function verifyEmail($verifyToken)
     {
-        $user = User::where('verify_token', $verificationToken)->first();
+        $user = Auth::user();
 
-        if ($user) {
+        if ($this->checkUserVerifyToken($user, $verifyToken)) {
             $user->verify_token = null;
             $user->email_verified_at = Carbon::now();
             $user->status = UserStatusEnum::ACTIVE;
@@ -68,9 +68,36 @@ class RegisterController extends Controller
         return UserResource::make($user);
     }
 
+    /**
+     * Повторная отправка email
+     *
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     */
     public function resendEmail()
     {
+        $user = Auth::user();
+        $user->verify_token = Str::random(24);
+        $user->save();
 
+        $job = new SendEmailVerificationJob($user->verify_token, $user->email);
+        $this->dispatch($job);
+
+        return response([
+            'status' => 'success',
+            'data'   => 'На почту'. $user->email . 'отправлено повторно сообщение для подтверждения'
+        ]);
+    }
+
+    /**
+     * Проверка токена пользователя
+     *
+     * @param User $user
+     * @param $verifyToken
+     * @return bool
+     */
+    public function checkUserVerifyToken(User $user, $verifyToken)
+    {
+        return $user->verify_token == $verifyToken;
     }
 
     /**
@@ -79,5 +106,9 @@ class RegisterController extends Controller
 
     /**
      * TODO авторизация по соц сетям
+     */
+
+    /**
+     * TODO каптча
      */
 }

@@ -16,7 +16,7 @@ class SendEmailVerificationJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    protected $verificationToken;
+    protected $verifyToken;
 
     protected $userEmail;
 
@@ -25,9 +25,9 @@ class SendEmailVerificationJob implements ShouldQueue
      *
      * @return void
      */
-    public function __construct($verificationToken, $userEmail)
+    public function __construct($verifyToken, $userEmail)
     {
-        $this->verificationToken = $verificationToken;
+        $this->verifyToken = $verifyToken;
         $this->userEmail = $userEmail;
     }
 
@@ -38,6 +38,6 @@ class SendEmailVerificationJob implements ShouldQueue
      */
     public function handle()
     {
-        Mail::to($this->userEmail)->send(new VerifyUserEmail($this->verificationToken));
+        Mail::to($this->userEmail)->send(new VerifyUserEmail($this->verifyToken));
     }
 }
