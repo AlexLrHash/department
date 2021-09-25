@@ -5,11 +5,13 @@ namespace App\Http\Controllers\Api\Auth;
 use App\Classes\Enum\Api\User\UserStatusEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Auth\RegisterRequest;
+use App\Http\Requests\Api\Auth\VerifyEmailRequest;
 use App\Http\Resources\Api\User\UserResource;
 use App\Jobs\SendEmailVerificationJob;
 use App\Jobs\SendVerificationTokenEmail;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -52,17 +54,17 @@ class RegisterController extends Controller
      * @param $verify_token
      * @return UserResource
      */
-    public function verifyEmail($verifyToken)
+    public function verifyEmail(VerifyEmailRequest $request)
     {
         $user = Auth::user();
 
-        if ($this->checkUserVerifyToken($user, $verifyToken)) {
+        if ($this->checkUserVerifyToken($user, $request->get('verify_token'))) {
             $user->verify_token = null;
             $user->email_verified_at = Carbon::now();
             $user->status = UserStatusEnum::ACTIVE;
             $user->save();
         } else {
-            abort(401, 'Неверный верификацонный номер');
+            abort(401, 'Неверный верификацонный код');
         }
 
         return UserResource::make($user);

@@ -21,7 +21,7 @@ Route::group(['middleware' => 'auth:sanctum'], function() {
     Route::post('/user/profile/update', [\App\Http\Controllers\Api\User\ProfileController::class, 'updateProfile'])->name('user.profile.name');
 
     Route::post('/user/token/verify/resend', [\App\Http\Controllers\Api\Auth\RegisterController::class, 'resendEmail'])->name('user.token.verify.resend');
-    Route::get('/user/token/verify/{verificationToken}', [\App\Http\Controllers\Api\Auth\RegisterController::class, 'verifyEmail'])->name('auth.token.verify');
+    Route::post('/user/token/verify/', [\App\Http\Controllers\Api\Auth\RegisterController::class, 'verifyEmail'])->name('auth.token.verify');
 
 });
 
