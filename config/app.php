@@ -231,6 +231,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
         'UserService' => \App\Facades\User::class,
+        'SocialService' => \App\Facades\Social::class,
         'DepartmentService' => \App\Facades\Department::class,
         'DisciplineService' => \App\Facades\Discipline::class,
     ],

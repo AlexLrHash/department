@@ -29,6 +29,10 @@ Route::group(['middleware' => 'auth:sanctum'], function() {
 Route::post('/register', [\App\Http\Controllers\Api\Auth\RegisterController::class, 'register'])->name('auth.register');
 Route::post('/login', [\App\Http\Controllers\Api\Auth\LoginController::class, 'login'])->name('auth.login');
 
+// social
+Route::get('/vk/auth/', [\App\Http\Controllers\Api\Auth\SocialController::class, 'index'])->name('vk.auth.index');
+Route::get('/vk/auth/callback', [\App\Http\Controllers\Api\Auth\SocialController::class, 'callback'])->name('vk.auth.callback');
+
 Route::get('/departments', [\App\Http\Controllers\Api\Department\DepartmentController::class, 'index'])->name('disciplines.index');
 Route::get('/departments/{departmentSecondId}', [\App\Http\Controllers\Api\Department\DepartmentController::class, 'show'])->name('disciplines.show');
 
