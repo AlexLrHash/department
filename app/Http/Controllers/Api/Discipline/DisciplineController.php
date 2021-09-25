@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api\Discipline;
 
-use App\Classes\Enum\UserStatusEnum;
+use App\Classes\Enum\UserRoleEnum;
 use App\Http\Controllers\Api\User\TeacherController;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Api\Discipline\DisciplineResource;

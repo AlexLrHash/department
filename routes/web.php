@@ -1,5 +1,6 @@
 <?php
 
+use App\Jobs\SendEmailVerificationJob;
 use Illuminate\Support\Facades\Route;
 
 /*

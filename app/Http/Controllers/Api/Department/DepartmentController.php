@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api\Department;
 
-use App\Classes\Enum\UserStatusEnum;
+use App\Classes\Enum\UserRoleEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Api\Department\DepartmentResource;
 use App\Http\Resources\Api\User\UserResource;

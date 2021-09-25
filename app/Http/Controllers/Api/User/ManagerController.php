@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api\User;
 
-use App\Classes\Enum\UserStatusEnum;
+use App\Classes\Enum\Api\User\UserRoleEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Api\User\UserResource;
 use App\Models\User;
@@ -11,13 +11,13 @@ use Illuminate\Http\Request;
 class ManagerController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Получение всех зав отделений
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
     public function index()
     {
-        return UserResource::collection(User::where('status', UserStatusEnum::MANAGER)->get());
+        return UserResource::collection(User::where('role', UserRoleEnum::MANAGER)->get());
     }
 
     /**
@@ -32,14 +32,14 @@ class ManagerController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Получение зав отделения
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param $secondId
+     * @return UserResource
      */
     public function show($secondId)
     {
-        return UserResource::make(User::where('status', UserStatusEnum::MANAGER)->where('second_id', $secondId)->firstOrFail());
+        return UserResource::make(User::where('role', UserRoleEnum::MANAGER)->where('second_id', $secondId)->firstOrFail());
     }
 
     /**

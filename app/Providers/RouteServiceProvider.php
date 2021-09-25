@@ -33,6 +33,7 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @return void
      */
+    // TODO гуадр для юзера
     public function boot()
     {
         $this->configureRateLimiting();
@@ -46,6 +47,11 @@ class RouteServiceProvider extends ServiceProvider
             Route::middleware('web')
                 ->namespace($this->namespace)
                 ->group(base_path('routes/web.php'));
+
+            Route::prefix('api/admin')
+                ->middleware('auth:sanctum')
+                ->name($this->namespace)
+                ->group(base_path('routes/api-admin.php'));
         });
     }
 

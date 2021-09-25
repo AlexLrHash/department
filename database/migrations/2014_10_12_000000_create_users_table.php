@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Classes\Enum\Api\User\UserRoleEnum;
 
 class CreateUsersTable extends Migration
 {
@@ -20,7 +21,7 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('department_id')->nullable();
-            $table->string('status')->nullable();
+            $table->string('role')->default(UserRoleEnum::USER);
             $table->integer('second_id');
             $table->rememberToken();
             $table->timestamps();

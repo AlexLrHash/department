@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api\User;
 
-use App\Classes\Enum\UserStatusEnum;
+use App\Classes\Enum\Api\User\UserRoleEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Api\User\UserResource;
 use App\Models\User;
@@ -11,13 +11,13 @@ use Illuminate\Http\Request;
 class TeacherController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Получение всех преподавалетей
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
     public function index()
     {
-        return UserResource::collection(User::where('status', UserStatusEnum::TEACHER)->get());
+        return UserResource::collection(User::where('role', UserRoleEnum::TEACHER)->get());
     }
 
     /**
@@ -32,14 +32,14 @@ class TeacherController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Получение преподователя
      *
-     * @param  int  $secondId
-     * @return \Illuminate\Http\Response
+     * @param $secondId
+     * @return UserResource
      */
     public function show($secondId)
     {
-        return UserResource::make(User::where('status', UserStatusEnum::TEACHER)->where('second_id', $secondId)->firstOrFail());
+        return UserResource::make(User::where('role', UserRoleEnum::TEACHER)->where('second_id', $secondId)->firstOrFail());
     }
 
     /**
@@ -65,11 +65,16 @@ class TeacherController extends Controller
         //
     }
 
+    /**
+     * Получение группы преподователей по отделению
+     *
+     * @return array
+     */
     public function getGroupedTeachersByDepartments()
     {
         $groupedTeachersByDepartments = [];
 
-        $teachers = User::where('status', UserStatusEnum::TEACHER)->get();
+        $teachers = User::where('role', UserRoleEnum::TEACHER)->get();
         foreach ($teachers as $teacher) {
             $groupedTeachersByDepartments[$teacher->department->id][] = $teacher;
         }

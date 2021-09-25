@@ -19,5 +19,11 @@ class DisciplineTableSeeder extends Seeder
            'number_of_labs' => 123,
            'number_of_practices' => 123
         ]);
+
+        Discipline::create([
+            'name' => 'ТРПО',
+            'number_of_labs' => 123,
+            'number_of_practices' => 123
+        ]);
     }
 }

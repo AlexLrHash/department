@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Classes\Enum\UserStatusEnum;
+use App\Classes\Enum\UserRoleEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -27,6 +27,6 @@ class Discipline extends Model
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function teachers() {
-        return $this->belongsToMany(User::class, 'teacher_discipline', 'discipline_id', 'teacher_id')->where('status', UserStatusEnum::TEACHER);
+        return $this->belongsToMany(User::class, 'teacher_discipline', 'discipline_id', 'teacher_id')->where('status', UserRoleEnum::TEACHER);
     }
 }
