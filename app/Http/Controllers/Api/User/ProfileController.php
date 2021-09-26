@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\User;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\User\Profile\UpdateProfileRequest;
+use App\Http\Requests\Api\User\Profile\UploadAvatarRequest;
 use App\Http\Resources\Api\User\UserResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -36,6 +37,12 @@ class ProfileController extends Controller
         return UserResource::make($user);
     }
 
+    /**
+     * Download Avatar
+     *
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
+     */
     public function downloadAvatar(Request $request)
     {
         $avatarUrl = $request->get('path');
@@ -45,6 +52,23 @@ class ProfileController extends Controller
 
         $headers['Content-Type'] = 'image/jpg';
 
-        return response()->download(base_path('storage/app/public/' . $avatarUrl));
+        return response()->download(base_path('storage/app/public/avatars/users/' . $avatarUrl));
+    }
+
+    /**
+     * Upload Image
+     *
+     * @param Request $request
+     * @return UserResource
+     */
+    public function uploadAvatar(Request $request)
+    {
+        $path = $request->file('avatar')->store('public/avatars/users');
+
+        $user = Auth::user();
+        $user->avatar = $path;
+        $user->save();
+
+        return UserResource::make($user);
     }
 }

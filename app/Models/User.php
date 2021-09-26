@@ -75,6 +75,10 @@ class User extends Authenticatable
      */
     public function getAvatarAttribute($userAvatar)
     {
-        return config("app.url") . config('filesystems.avatars.users') . $userAvatar;
+        $avatarUrl = config("app.url") . '/storage/';
+
+        $userAvatar = str_replace('public/', '', $userAvatar);
+
+        return $userAvatar ? $avatarUrl . $userAvatar : $avatarUrl . 'default.jpg';
     }
 }
