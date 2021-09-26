@@ -17,7 +17,8 @@ class TeacherResource extends JsonResource
         return [
             'id' => $this->second_id,
             'name' => $this->name,
-            'email' => $this->email
+            'email' => $this->email,
+            'avatar' => $this->avatar
         ];
     }
 }

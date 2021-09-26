@@ -7,6 +7,7 @@ use App\Http\Requests\Api\User\Profile\UpdateProfileRequest;
 use App\Http\Resources\Api\User\UserResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {
@@ -33,5 +34,17 @@ class ProfileController extends Controller
         $user->save();
 
         return UserResource::make($user);
+    }
+
+    public function downloadAvatar(Request $request)
+    {
+        $avatarUrl = $request->get('path');
+//        if (!Storage::exists($avatarUrl)) {
+//            abort(404, 'Не найдена картинка по такому url');
+//        };
+
+        $headers['Content-Type'] = 'image/jpg';
+
+        return response()->download(base_path('storage/app/public/' . $avatarUrl));
     }
 }

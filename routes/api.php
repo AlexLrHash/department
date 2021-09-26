@@ -47,3 +47,5 @@ Route::get('/managers/{managerId}', [\App\Http\Controllers\Api\User\ManagerContr
 Route::get('/teachers', [\App\Http\Controllers\Api\User\TeacherController::class, 'index'])->name('teachers.index');
 Route::get('/teachers/{teacherSecondId}', [\App\Http\Controllers\Api\User\TeacherController::class, 'show'])->name('teachers.show');
 Route::get('/teachers/departments/grouped', [\App\Http\Controllers\Api\User\TeacherController::class, 'getGroupedTeachersByDepartments'])->name('teachers.disciplines.grouped');
+
+Route::get('user/avatar/download', [\App\Http\Controllers\Api\User\ProfileController::class, 'downloadAvatar'])->name('user.avatar.download');

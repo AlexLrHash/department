@@ -23,7 +23,9 @@ class User extends Authenticatable
         'password',
         'department_id',
         'status',
-        'verify_token'
+        'verify_token',
+        'is_consent_privacy_policy',
+        'is_consent_terms_of_use'
     ];
 
     /**
@@ -45,13 +47,34 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    /**
+     * Получение департамента
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function department()
     {
         return $this->belongsTo(Department::class, 'department_id', 'id');
     }
 
+    /**
+     * Получение дисцилин
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function disciplines()
     {
         return $this->belongsToMany(Discipline::class, 'teacher_discipline', 'teacher_id', 'discipline_id');
+    }
+
+    /**
+     * Получение аватара
+     *
+     * @param $userAvatar
+     * @return string
+     */
+    public function getAvatarAttribute($userAvatar)
+    {
+        return config("app.url") . config('filesystems.avatars.users') . $userAvatar;
     }
 }
