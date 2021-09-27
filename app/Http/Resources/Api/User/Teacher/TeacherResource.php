@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Api\User\Teacher;
 
+use App\Http\Resources\Api\Discipline\DisciplineResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class TeacherResource extends JsonResource
@@ -18,7 +19,8 @@ class TeacherResource extends JsonResource
             'id' => $this->second_id,
             'name' => $this->name,
             'email' => $this->email,
-            'avatar' => $this->avatar
+            'avatar' => $this->avatar,
+            'disciplines' => TeacherDisciplineResource::collection($this->disciplines)
         ];
     }
 }

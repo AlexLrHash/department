@@ -3,6 +3,7 @@
 namespace App\Http\Resources\Api\Admin\User;
 
 use App\Classes\Enum\UserRoleEnum;
+use App\Http\Resources\Api\Admin\Discipline\DisciplineResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class UserResource extends JsonResource
@@ -21,7 +22,7 @@ class UserResource extends JsonResource
             'email' => $this->email,
             'role' => trans('roles.' . $this->role),
             'department' => $this->department,
-            'disciplines' => $this->disciplines,
+            'disciplines' => DisciplineResource::collection($this->disciplines),
             'avatar' => $this->avatar
         ];
     }

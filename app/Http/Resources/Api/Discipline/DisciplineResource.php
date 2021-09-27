@@ -19,7 +19,8 @@ class DisciplineResource extends JsonResource
             'name' => $this->name,
             'description' => $this->descriptions,
             'number_of_labs' => $this->number_of_labs,
-            'number_of_practices' => $this->number_of_practices
+            'number_of_practices' => $this->number_of_practices,
+            'teachers' => DisciplineTeacherResource::collection($this->teachers)
         ];
     }
 }

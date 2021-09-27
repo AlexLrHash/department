@@ -2,7 +2,7 @@
 
 namespace App\Http\Resources\Api\Admin\Discipline;
 
-use App\Http\Resources\Api\Admin\User\UserResource;
+use App\Http\Resources\Api\User\UserResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class DisciplineResource extends JsonResource

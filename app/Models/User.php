@@ -79,6 +79,6 @@ class User extends Authenticatable
 
         $userAvatar = str_replace('public/', '', $userAvatar);
 
-        return $userAvatar ? $avatarUrl . $userAvatar : $avatarUrl . 'default.jpg';
+        return $userAvatar ? $avatarUrl . $userAvatar : $avatarUrl . 'avatars/users/default.jpg';
     }
 }

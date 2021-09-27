@@ -45,7 +45,7 @@ class DisciplineController extends Controller
      */
     public function show($disciplineSecondId)
     {
-        return DisciplineResource::make(Discipline::findOrFail($disciplineSecondId));
+        return DisciplineResource::make(Discipline::where('second_id', $disciplineSecondId)->firstOrFail());
     }
 
     /**

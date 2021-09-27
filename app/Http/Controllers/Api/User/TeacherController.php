@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\User;
 
 use App\Classes\Enum\Api\User\UserRoleEnum;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Api\User\Teacher\TeacherResource;
 use App\Http\Resources\Api\User\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -17,7 +18,7 @@ class TeacherController extends Controller
      */
     public function index()
     {
-        return UserResource::collection(User::where('role', UserRoleEnum::TEACHER)->get());
+        return TeacherResource::collection(User::where('role', UserRoleEnum::TEACHER)->get());
     }
 
     /**
@@ -35,11 +36,11 @@ class TeacherController extends Controller
      * Получение преподователя
      *
      * @param $secondId
-     * @return UserResource
+     * @return TeacherResource
      */
     public function show($secondId)
     {
-        return UserResource::make(User::where('role', UserRoleEnum::TEACHER)->where('second_id', $secondId)->firstOrFail());
+        return TeacherResource::make(User::where('role', UserRoleEnum::TEACHER)->where('second_id', $secondId)->firstOrFail());
     }
 
     /**
