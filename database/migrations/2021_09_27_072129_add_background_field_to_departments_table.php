@@ -14,7 +14,7 @@ class AddBackgroundFieldToDepartmentsTable extends Migration
     public function up()
     {
         Schema::table('departments', function (Blueprint $table) {
-            $table->string('backgrounds')->nullable()->default(null);
+            $table->string('backgrounds')->nullable()->default(null)->after('description');
         });
     }
 

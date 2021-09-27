@@ -14,8 +14,8 @@ class AddIsConsentTermsOfUseFieldToUsers extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->boolean('is_consent_terms_of_use')->nullable()->default(false);
-            $table->boolean('is_consent_privacy_policy')->nullable()->default(false);
+            $table->boolean('is_consent_terms_of_use')->nullable()->default(false)->after('status');
+            $table->boolean('is_consent_privacy_policy')->nullable()->default(false)->after('is_consent_terms_of_use');
         });
     }
 
