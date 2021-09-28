@@ -4,7 +4,8 @@ namespace App\Http\Controllers\Api\Admin;
 
 use App\Classes\Enum\Api\User\UserRoleEnum;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\Api\Admin\DepartmentResource;
+use App\Http\Requests\AddDisciplineRequest;
+use App\Http\Resources\Api\Admin\Department\DepartmentResource;
 use App\Http\Resources\Api\Admin\Discipline\DisciplineResource;
 use App\Http\Resources\Api\Admin\User\UserResource;
 use App\Models\Department;
@@ -72,11 +73,24 @@ class AdminController extends Controller
      * @param $teacherSecondId
      * @param $disciplineSecondId
      * @return UserResource
+     * TODO FORM REQUEST
      */
-    public function addDiscipline($teacherSecondId, $disciplineSecondId)
+    public function addDiscipline(AddDisciplineRequest $request, $teacherSecondId, $disciplineSecondId)
     {
         $user = User::where('second_id', $teacherSecondId)->where('role', UserRoleEnum::TEACHER)->firstOrFail();
-        $user->disciplines()->attach(Discipline::where('second_id', $disciplineSecondId)->firstOrFail()->id);
+
+        $discipline = Discipline::where('second_id', $disciplineSecondId)->firstOrFail();
+
+        if (!$user->disciplines->contains($discipline->id)) {
+            $user->disciplines()->attach($discipline->id);
+        }
+
+        $user->load(['disciplines']);
+
+        $discipline = $user->disciplines->find($discipline->id)->pivot;
+        $discipline->number_of_labs = $request->get('number_of_labs');
+        $discipline->number_of_practices = $request->get('number_of_practices');
+        $discipline->save();
 
         return UserResource::make($user);
     }
@@ -91,7 +105,14 @@ class AdminController extends Controller
     public function removeDiscipline($teacherSecondId, $disciplineSecondId)
     {
         $user = User::where('second_id', $teacherSecondId)->where('role', UserRoleEnum::TEACHER)->firstOrFail();
-        $user->disciplines()->detach(Discipline::where('second_id', $disciplineSecondId)->firstOrFail()->id);
+
+        $discipline = Discipline::where('second_id', $disciplineSecondId)->firstOrFail();
+
+        if ($user->disciplines->contains($discipline->id)) {
+            $user->disciplines()->detach($discipline->id);
+        }
+
+        $user->load(['disciplines']);
 
         return UserResource::make($user);
     }

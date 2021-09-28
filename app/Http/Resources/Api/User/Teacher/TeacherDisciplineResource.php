@@ -18,8 +18,12 @@ class TeacherDisciplineResource extends JsonResource
             'id' => $this->second_id,
             'name' => $this->name,
             'description' => $this->descriptions,
-            'number_of_labs' => $this->number_of_labs,
-            'number_of_practices' => $this->number_of_practices,
+            'number_of_labs' => $this->whenPivotLoaded('teacher_discipline', function () {
+                return $this->pivot->number_of_labs;
+            }),
+            'number_of_practices' => $this->whenPivotLoaded('teacher_discipline', function () {
+                return $this->pivot->number_of_practices;
+            }),
         ];
     }
 }

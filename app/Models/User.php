@@ -64,7 +64,7 @@ class User extends Authenticatable
      */
     public function disciplines()
     {
-        return $this->belongsToMany(Discipline::class, 'teacher_discipline', 'teacher_id', 'discipline_id');
+        return $this->belongsToMany(Discipline::class, 'teacher_discipline', 'teacher_id', 'discipline_id')->withPivot(['number_of_practices', 'number_of_labs']);
     }
 
     /**

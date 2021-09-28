@@ -22,7 +22,7 @@ class UserResource extends JsonResource
             'email' => $this->email,
             'role' => trans('roles.' . $this->role),
             'department' => $this->department,
-            'disciplines' => DisciplineResource::collection($this->disciplines),
+            'disciplines' => TeacherDisciplineResource::collection($this->disciplines),
             'avatar' => $this->avatar
         ];
     }

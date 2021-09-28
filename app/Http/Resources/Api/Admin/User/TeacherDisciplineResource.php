@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Http\Resources\Api\Admin;
+namespace App\Http\Resources\Api\Admin\User;
 
-use App\Http\Resources\Api\Admin\User\UserResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class DepartmentResource extends JsonResource
+class TeacherDisciplineResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -18,8 +17,13 @@ class DepartmentResource extends JsonResource
         return [
             'id' => $this->second_id,
             'name' => $this->name,
+            'number_of_labs' => $this->whenPivotLoaded('teacher_discipline', function () {
+                return $this->pivot->number_of_labs;
+            }),
+            'number_of_practices' => $this->whenPivotLoaded('teacher_discipline', function () {
+                return $this->pivot->number_of_practices;
+            }),
             'description' => $this->description,
-            'manager' => UserResource::make($this->manager)
         ];
     }
 }
