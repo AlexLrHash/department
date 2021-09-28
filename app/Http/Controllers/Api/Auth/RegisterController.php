@@ -103,16 +103,4 @@ class RegisterController extends Controller
     {
         return $user->verify_token == $verifyToken;
     }
-
-    /**
-     * TODO запомнить меня
-     */
-
-    /**
-     * TODO авторизация по соц сетям
-     */
-
-    /**
-     * TODO каптча
-     */
 }

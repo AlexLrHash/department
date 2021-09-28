@@ -33,7 +33,6 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    // TODO гуадр для юзера
     public function boot()
     {
         $this->configureRateLimiting();

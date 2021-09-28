@@ -73,7 +73,6 @@ class AdminController extends Controller
      * @param $teacherSecondId
      * @param $disciplineSecondId
      * @return UserResource
-     * TODO FORM REQUEST
      */
     public function addDiscipline(AddDisciplineRequest $request, $teacherSecondId, $disciplineSecondId)
     {

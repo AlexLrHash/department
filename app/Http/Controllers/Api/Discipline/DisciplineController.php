@@ -75,7 +75,6 @@ class DisciplineController extends Controller
      * Export in pdf
      *
      * @return mixed
-     * TODO change to form request + export
      */
     public function exportPdf(Request $request)
     {

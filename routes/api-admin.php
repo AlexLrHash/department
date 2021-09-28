@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 
-#TODO сделать для админа guard
 Route::get('/', [\App\Http\Controllers\Api\Admin\AdminController::class, 'admin'])->name('admin.user');
 
 // users

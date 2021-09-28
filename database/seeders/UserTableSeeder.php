@@ -20,7 +20,6 @@ class UserTableSeeder extends Seeder
         $this->createTeachers();
         $this->createSuperUser();
     }
-    #TODO factory
 
     /**
      * Создание преподавателей
