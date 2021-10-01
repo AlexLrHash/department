@@ -18,6 +18,9 @@ return [
           'required'  => 'Пароль обязателен',
           'confirmed' => 'Подтверждение пароля обязательно'
       ],
+      'role' => [
+          'in' => 'Передана несуществующая роль'
+      ]
     ],
     'disciplines' => [
         'number_of_practices' => [

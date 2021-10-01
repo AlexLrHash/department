@@ -5,6 +5,7 @@ namespace App\Http\Resources\Api\Admin\User;
 use App\Classes\Enum\UserRoleEnum;
 use App\Http\Resources\Api\Admin\Discipline\DisciplineResource;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Arr;
 
 class UserResource extends JsonResource
 {
@@ -16,6 +17,11 @@ class UserResource extends JsonResource
      */
     public function toArray($request)
     {
+        $commonNumberOfWork = $this->commonNumberOfWork();
+
+        $commonNumberOfLabs = Arr::get($commonNumberOfWork, 'common_number_of_labs');
+        $commonNumberOfPractices = Arr::get($commonNumberOfWork, 'common_number_of_practices');
+
         return [
             'id' => $this->second_id,
             'name' => $this->name,
@@ -23,6 +29,8 @@ class UserResource extends JsonResource
             'role' => trans('roles.' . $this->role),
             'department' => $this->department,
             'disciplines' => TeacherDisciplineResource::collection($this->disciplines),
+            'common_number_of_labs' => $commonNumberOfLabs,
+            'common_number_of_practices' => $commonNumberOfPractices,
             'avatar' => $this->avatar
         ];
     }

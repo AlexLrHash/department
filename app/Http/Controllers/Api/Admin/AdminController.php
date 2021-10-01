@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Api\Admin;
 
 use App\Classes\Enum\Api\User\UserRoleEnum;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\AddDisciplineRequest;
+use App\Http\Filters\Admin\UserFilter;
+use App\Http\Requests\Api\Admin\User\UserRequest;
+use App\Http\Requests\Api\User\Discipline\AddDisciplineRequest;
 use App\Http\Resources\Api\Admin\Department\DepartmentResource;
 use App\Http\Resources\Api\Admin\Discipline\DisciplineResource;
 use App\Http\Resources\Api\Admin\User\UserResource;
@@ -31,9 +33,19 @@ class AdminController extends Controller
      *
      * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
-    public function getUsers()
+    public function getUsers(UserRequest $request)
     {
-        return UserResource::collection(User::where('role', UserRoleEnum::TEACHER)->get());
+        $users = User::query();
+
+        $requestData = $request->all();
+
+        $filter = app()->make(UserFilter::class, ['queryParams' => array_filter($requestData)]);
+
+        $users = User::filter($filter);
+
+        $users = $users->where('role', UserRoleEnum::TEACHER)->get();
+
+        return UserResource::collection($users);
     }
 
     /**

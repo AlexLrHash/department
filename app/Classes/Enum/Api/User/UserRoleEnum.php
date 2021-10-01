@@ -2,7 +2,9 @@
 
 namespace App\Classes\Enum\Api\User;
 
-class UserRoleEnum
+use App\Classes\Enum\Enum;
+
+class UserRoleEnum extends Enum
 {
     const MANAGER = 'MANAGER';
 

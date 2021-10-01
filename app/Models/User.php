@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Traits\Filterable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -10,7 +11,7 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, Filterable;
 
     /**
      * The attributes that are mass assignable.
@@ -80,5 +81,28 @@ class User extends Authenticatable
         $userAvatar = str_replace('public/', '', $userAvatar);
 
         return $userAvatar ? $avatarUrl . $userAvatar : $avatarUrl . 'avatars/users/default.jpg';
+    }
+
+    /**
+     * Получение количесвта часов
+     *
+     * @return array
+     */
+    public function commonNumberOfWork()
+    {
+        $commonNumberOfLabs = 0;
+        $commonNumberOfPractices = 0;
+
+        $userDisciplines = $this->disciplines;
+
+        foreach ($userDisciplines as $discipline) {
+            $commonNumberOfLabs += $discipline->pivot->number_of_labs;
+            $commonNumberOfPractices += $discipline->pivot->number_of_practices;
+        }
+
+        return [
+            'common_number_of_practices' => $commonNumberOfPractices,
+            'common_number_of_labs' => $commonNumberOfLabs
+        ];
     }
 }
