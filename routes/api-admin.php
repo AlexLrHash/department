@@ -7,6 +7,7 @@ Route::get('/', [\App\Http\Controllers\Api\Admin\AdminController::class, 'admin'
 // users
 Route::get('/users', [\App\Http\Controllers\Api\Admin\AdminController::class, 'getUsers'])->name('admin.users');
 Route::get('/users/{id}', [\App\Http\Controllers\Api\Admin\AdminController::class, 'getUser'])->name('admin.user');
+
 // teachers
 Route::post('/teachers/{teacherSecondId}/disciplines/{disciplineSecondId}/add', [\App\Http\Controllers\Api\Admin\AdminController::class, 'addDiscipline']);
 Route::post('/teachers/{teacherSecondId}/disciplines/{disciplineSecondId}/remove', [\App\Http\Controllers\Api\Admin\AdminController::class, 'removeDiscipline']);
