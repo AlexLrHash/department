@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Api\Admin;
 
 use App\Classes\Enum\Api\User\UserRoleEnum;
 use App\Http\Controllers\Controller;
+use App\Http\Filters\Admin\DepartmentFilter;
 use App\Http\Filters\Admin\DisciplineFilter;
 use App\Http\Filters\Admin\UserFilter;
+use App\Http\Requests\Api\Admin\Department\DepartmentRequest;
 use App\Http\Requests\Api\Admin\Discipline\DisciplineRequest;
 use App\Http\Requests\Api\Admin\User\UserRequest;
 use App\Http\Requests\Api\User\Discipline\AddDisciplineRequest;
@@ -15,9 +17,7 @@ use App\Http\Resources\Api\Admin\User\UserResource;
 use App\Models\Department;
 use App\Models\Discipline;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use function Symfony\Component\String\s;
 
 class AdminController extends Controller
 {
@@ -40,9 +40,7 @@ class AdminController extends Controller
     {
         $filter = app()->make(UserFilter::class, ['queryParams' => array_filter($request->all())]);
 
-        $users = User::filter($filter);
-
-        $users = $users->where('role', UserRoleEnum::TEACHER)->get();
+        $users = User::filter($filter)->get();
 
         return UserResource::collection($users);
     }
@@ -77,9 +75,13 @@ class AdminController extends Controller
      *
      * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
-    public function getDepartments()
+    public function getDepartments(DepartmentRequest $request)
     {
-        return DepartmentResource::collection(Department::get());
+        $filter = app()->make(DepartmentFilter::class, ['queryParams' => $request->all()]);
+
+        $departments = Department::filter($filter)->get();
+
+        return DepartmentResource::collection($departments);
     }
 
     /**

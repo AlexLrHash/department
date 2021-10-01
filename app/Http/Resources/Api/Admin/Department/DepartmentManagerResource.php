@@ -2,10 +2,9 @@
 
 namespace App\Http\Resources\Api\Admin\Department;
 
-use App\Http\Resources\Api\Admin\User\UserResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class DepartmentResource extends JsonResource
+class DepartmentManagerResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -18,8 +17,9 @@ class DepartmentResource extends JsonResource
         return [
             'id' => $this->second_id,
             'name' => $this->name,
-            'description' => $this->description,
-            'manager' => DepartmentManagerResource::make($this->manager)
+            'email' => $this->email,
+            'role' => trans('roles.' . $this->role),
+            'avatar' => $this->avatar
         ];
     }
 }
