@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Api\Admin;
 
 use App\Classes\Enum\Api\User\UserRoleEnum;
 use App\Http\Controllers\Controller;
+use App\Http\Filters\Admin\DisciplineFilter;
 use App\Http\Filters\Admin\UserFilter;
+use App\Http\Requests\Api\Admin\Discipline\DisciplineRequest;
 use App\Http\Requests\Api\Admin\User\UserRequest;
 use App\Http\Requests\Api\User\Discipline\AddDisciplineRequest;
 use App\Http\Resources\Api\Admin\Department\DepartmentResource;
@@ -15,6 +17,7 @@ use App\Models\Discipline;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use function Symfony\Component\String\s;
 
 class AdminController extends Controller
 {
@@ -35,11 +38,7 @@ class AdminController extends Controller
      */
     public function getUsers(UserRequest $request)
     {
-        $users = User::query();
-
-        $requestData = $request->all();
-
-        $filter = app()->make(UserFilter::class, ['queryParams' => array_filter($requestData)]);
+        $filter = app()->make(UserFilter::class, ['queryParams' => array_filter($request->all())]);
 
         $users = User::filter($filter);
 
@@ -64,9 +63,13 @@ class AdminController extends Controller
      *
      * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
-    public function getDisciplines()
+    public function getDisciplines(DisciplineRequest $request)
     {
-        return DisciplineResource::collection(Discipline::get());
+        $filter = app()->make(DisciplineFilter::class, ['queryParams' => array_filter($request->all())]);
+
+        $disciplines = Discipline::filter($filter)->get();
+
+        return DisciplineResource::collection($disciplines);
     }
 
     /**

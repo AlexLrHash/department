@@ -3,12 +3,13 @@
 namespace App\Models;
 
 use App\Classes\Enum\Api\User\UserRoleEnum;
+use App\Models\Traits\Filterable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Discipline extends Model
 {
-    use HasFactory;
+    use HasFactory, Filterable;
 
     /**
      * The attributes that are mass assignable.
