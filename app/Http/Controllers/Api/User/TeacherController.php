@@ -18,7 +18,7 @@ class TeacherController extends Controller
      */
     public function index()
     {
-        return TeacherResource::collection(User::where('role', UserRoleEnum::TEACHER)->get());
+        return TeacherResource::collection(User::teachers()->get());
     }
 
     /**
@@ -40,7 +40,7 @@ class TeacherController extends Controller
      */
     public function show($secondId)
     {
-        return TeacherResource::make(User::where('role', UserRoleEnum::TEACHER)->where('second_id', $secondId)->firstOrFail());
+        return TeacherResource::make(User::teachers()->where('second_id', $secondId)->firstOrFail());
     }
 
     /**
@@ -75,7 +75,7 @@ class TeacherController extends Controller
     {
         $groupedTeachersByDepartments = [];
 
-        $teachers = User::where('role', UserRoleEnum::TEACHER)->get();
+        $teachers = User::teachers()->get();
         foreach ($teachers as $teacher) {
             $groupedTeachersByDepartments[$teacher->department->id][] = $teacher;
         }

@@ -24,7 +24,19 @@ class UpdateProfileRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => ['required', 'min:6', 'max:255']
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'name.required' => trans('validation.user.name.required'),
+            'name.min'      => trans('validation.user.name.min'),
+            'name.max'      => trans('validation.user.name.max')
         ];
     }
 }

@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use App\Classes\Enum\Api\User\UserRoleEnum;
 use App\Models\Traits\Filterable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -21,9 +23,11 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'role',
         'password',
         'department_id',
         'status',
+        'avatar',
         'verify_token',
         'is_consent_privacy_policy',
         'is_consent_terms_of_use'
@@ -73,14 +77,19 @@ class User extends Authenticatable
      *
      * @param $userAvatar
      * @return string
+     * TODO Change logic
      */
     public function getAvatarAttribute($userAvatar)
     {
-        $avatarUrl = config("app.url") . '/storage/';
+        if (strpos($userAvatar, 'https')) {
+            $avatarUrl = config("app.url") . '/storage/';
 
-        $userAvatar = str_replace('public/', '', $userAvatar);
+            $userAvatar = str_replace('public/', '', $userAvatar);
 
-        return $userAvatar ? $avatarUrl . $userAvatar : $avatarUrl . 'avatars/users/default.jpg';
+            return $userAvatar ? $avatarUrl . $userAvatar : $avatarUrl . 'avatars/users/default.jpg';
+        }
+
+        return $userAvatar;
     }
 
     /**
@@ -104,5 +113,15 @@ class User extends Authenticatable
             'common_number_of_practices' => $commonNumberOfPractices,
             'common_number_of_labs' => $commonNumberOfLabs
         ];
+    }
+
+    /**
+     * Teachers
+     *
+     * @param Builder $builder
+     */
+    public function scopeTeachers(Builder $builder)
+    {
+        $builder->where('role', UserRoleEnum::TEACHER);
     }
 }
