@@ -234,6 +234,8 @@ return [
         'SocialService' => \App\Facades\Social::class,
         'DepartmentService' => \App\Facades\Department::class,
         'DisciplineService' => \App\Facades\Discipline::class,
+        'ManagerService' => \App\Facades\Manager::class,
+        'TeacherService' => \App\Facades\Teacher::class
     ],
 
 ];

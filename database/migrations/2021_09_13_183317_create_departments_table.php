@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Classes\Enum\Api\DefaultUrlEnum;
 
 class CreateDepartmentsTable extends Migration
 {
@@ -14,10 +15,11 @@ class CreateDepartmentsTable extends Migration
     public function up()
     {
         Schema::create('departments', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->integer('manager_id');
-            $table->text('description')->nullable();
+            $table->bigIncrements('id');
+            $table->string('name')->index();
+            $table->unsignedBigInteger('manager_id');
+            $table->longText('description')->nullable()->default(null);
+            $table->string('background')->default(DefaultUrlEnum::DEPARTMENT_DEFAULT_BACKGROUND_URL);
             $table->integer('second_id');
             $table->timestamps();
         });

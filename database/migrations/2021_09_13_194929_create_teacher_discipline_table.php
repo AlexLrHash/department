@@ -14,9 +14,11 @@ class CreateTeacherDisciplineTable extends Migration
     public function up()
     {
         Schema::create('teacher_discipline', function (Blueprint $table) {
-            $table->id();
-            $table->integer('teacher_id');
-            $table->integer('discipline_id');
+            $table->bigIncrements('id');
+            $table->unsignedBigInteger('teacher_id');
+            $table->unsignedBigInteger('discipline_id');
+            $table->unsignedBigInteger('number_of_practices')->default(0);
+            $table->unsignedBigInteger('number_of_labs')->default(0);
             $table->timestamps();
         });
     }

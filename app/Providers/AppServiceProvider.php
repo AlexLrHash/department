@@ -17,6 +17,8 @@ class AppServiceProvider extends ServiceProvider
         $this->app->register(DepartmentServiceProvider::class);
         $this->app->register(DisciplineServiceProvider::class);
         $this->app->register(SocialServiceProvider::class);
+        $this->app->register(ManagerServiceProvider::class);
+        $this->app->register(TeacherServiceProvider::class);
     }
 
     /**

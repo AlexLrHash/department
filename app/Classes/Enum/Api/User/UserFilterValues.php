@@ -6,12 +6,12 @@ use App\Classes\Enum\Enum;
 
 class UserFilterValues extends Enum
 {
-    // name
+    // по имени
     const NAME = "name";
 
-    // email
+    // по почте
     const EMAIL = "email";
 
-    // role
+    // по роли
     const ROLE = "role";
 }

@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Console\Commands\Api\Parser\Manager;
+namespace App\Console\Commands\Api\Parser\User\Manager;
 
-use App\Classes\Enum\Api\Manager\ManagerParserUrl;
-use App\Services\Api\Manager\ManagerService;
-use App\Services\Api\Teacher\TeacherService;
+use App\Classes\Enum\Api\User\Manager\ManagerParserUrl;
+use App\Facades\Manager;
 use Illuminate\Console\Command;
 
 class ParseManager extends Command
@@ -40,10 +39,8 @@ class ParseManager extends Command
      */
     public function handle()
     {
-        $managerService = app(ManagerService::class);
-
         foreach (ManagerParserUrl::lists() as $url ) {
-            $managerService->parse($url);
+            Manager::parse($url);
         }
     }
 }

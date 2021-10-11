@@ -29,13 +29,4 @@ class Department extends Model
     {
         return $this->belongsTo(User::class, 'manager_id', 'id');
     }
-
-    public function getBackgroundAttribute($departmentBackground)
-    {
-        $departmentBackgroundUrl = config('app.url') . '/storage/';
-
-        $departmentBackground = str_replace('public/', '', $departmentBackground);
-
-        return $departmentBackground ? $departmentBackgroundUrl . $departmentBackground : $departmentBackgroundUrl . 'backgrounds/departments/default.jpg';
-    }
 }

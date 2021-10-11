@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Classes\Enum\Api\DefaultUrlEnum;
 
 class CreateDisciplinesTable extends Migration
 {
@@ -14,12 +15,11 @@ class CreateDisciplinesTable extends Migration
     public function up()
     {
         Schema::create('disciplines', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->integer('number_of_labs');
-            $table->integer('number_of_practices');
-            $table->text('description')->nullable();
+            $table->bigIncrements('id');
+            $table->string('name')->index();
+            $table->longText('description')->nullable()->default(null);
             $table->integer('second_id');
+            $table->string('background')->default(DefaultUrlEnum::DISCIPLINE_DEFAULT_BACKGROUND_URL);
             $table->timestamps();
         });
     }

@@ -16,31 +16,7 @@ class UserTableSeeder extends Seeder
      */
     public function run()
     {
-        $this->createManagers();
-        $this->createTeachers();
         $this->createSuperUser();
-    }
-
-    /**
-     * Создание преподавателей
-     */
-    public function createTeachers()
-    {
-        User::factory()->count(5)->create([
-            'role' => UserRoleEnum::TEACHER,
-            'department_id' => rand(0, 2)
-        ]);
-    }
-
-    /**
-     * Создание зав отделениями
-     */
-    public function createManagers()
-    {
-        User::factory()->count(5)->create([
-            'role' => UserRoleEnum::MANAGER,
-            'department_id' => rand(0, 2)
-        ]);
     }
 
     /**
@@ -48,12 +24,15 @@ class UserTableSeeder extends Seeder
      */
     public function createSuperUser()
     {
-        User::create([
-            'email' => 'ryzhakovalexeynicol@gmail.com',
-            'password' => Hash::make('secret'),
-            'name' => 'SuperUser',
-            'role' => UserRoleEnum::ADMIN,
-            'department_id' => 2
-        ]);
+        try {
+            User::create([
+                'email' => 'ryzhakovalexeynicol@gmail.com',
+                'password' => Hash::make('secret'),
+                'name' => 'SuperUser',
+                'role' => UserRoleEnum::ADMIN,
+            ]);
+        } catch (\Exception $e) {
+            \Log::warning($e);
+        }
     }
 }

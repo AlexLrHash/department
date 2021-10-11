@@ -25,7 +25,6 @@ class User extends Authenticatable
         'email',
         'role',
         'password',
-        'department_id',
         'status',
         'avatar',
         'verify_token',
@@ -53,16 +52,6 @@ class User extends Authenticatable
     ];
 
     /**
-     * Получение департамента
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function department()
-    {
-        return $this->belongsTo(Department::class, 'department_id', 'id');
-    }
-
-    /**
      * Получение дисцилин
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
@@ -70,26 +59,6 @@ class User extends Authenticatable
     public function disciplines()
     {
         return $this->belongsToMany(Discipline::class, 'teacher_discipline', 'teacher_id', 'discipline_id')->withPivot(['number_of_practices', 'number_of_labs']);
-    }
-
-    /**
-     * Получение аватара
-     *
-     * @param $userAvatar
-     * @return string
-     * TODO Change logic
-     */
-    public function getAvatarAttribute($userAvatar)
-    {
-        if (strpos($userAvatar, 'https')) {
-            $avatarUrl = config("app.url") . '/storage/';
-
-            $userAvatar = str_replace('public/', '', $userAvatar);
-
-            return $userAvatar ? $avatarUrl . $userAvatar : $avatarUrl . 'avatars/users/default.jpg';
-        }
-
-        return $userAvatar;
     }
 
     /**
