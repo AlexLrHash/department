@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers\Api\User;
 
+use App\Exports\TeachersExport;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Api\User\Teacher\TeacherResource;
 use App\Models\User;
+use Illuminate\Support\Facades\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class TeacherController extends Controller
 {
@@ -44,5 +47,16 @@ class TeacherController extends Controller
         }
 
         return $groupedTeachersByDepartments;
+    }
+
+    /**
+     * Экспорт в excel
+     *
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
+     */
+    public function exportExcel(Request $request)
+    {
+        return Excel::download(new TeachersExport, 'teachers.xlsx');
     }
 }

@@ -7,6 +7,7 @@ use App\Http\Requests\Api\User\Profile\UpdateProfileRequest;
 use App\Http\Resources\Api\User\UserResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Intervention\Image\Facades\Image;
 
 class ProfileController extends Controller
 {
@@ -62,11 +63,15 @@ class ProfileController extends Controller
      */
     public function uploadAvatar(Request $request)
     {
+
         $path = $request->file('avatar')->store('public/avatars/users');
 
         $user = Auth::user();
-        $user->avatar = $path;
+        $user->avatar = config('app.url') . str_replace('public', '/storage', $path);
         $user->save();
+
+        $image = Image::make(str_replace('public', 'storage', $path))->fit(300, 300);
+        $image->save();
 
         return UserResource::make($user);
     }

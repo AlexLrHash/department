@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers\Api\Discipline;
 
+use App\Exports\DisciplinesExport;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Api\Discipline\DisciplineResource;
 use App\Http\Resources\Api\User\Teacher\TeacherResource;
+use App\Imports\DisciplinesImport;
 use App\Models\Discipline;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Maatwebsite\Excel\Facades\Excel;
 
 class DisciplineController extends Controller
 {
@@ -53,6 +56,17 @@ class DisciplineController extends Controller
     }
 
     /**
+     * Экпрорт в excel формат
+     *
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
+     */
+    public function exportExcel(Request $request)
+    {
+        return Excel::download(new DisciplinesExport, 'disciplines.xlsx');
+    }
+
+    /**
      * Получаем преподавателей дисциплины
      *
      * @param $disciplineSecondId
@@ -63,5 +77,15 @@ class DisciplineController extends Controller
         $discipline = Discipline::where('second_id', $disciplineSecondId)->firstOrFail();
 
         return TeacherResource::collection($discipline->teachers);
+    }
+
+    /**
+     * @return Discipline[]|\Illuminate\Database\Eloquent\Collection
+     */
+    public function importExcel()
+    {
+        Excel::import(new DisciplinesImport(), 'disciplines.xlsx');
+
+        return Discipline::all();
     }
 }

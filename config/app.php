@@ -175,7 +175,8 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
-
+        Maatwebsite\Excel\ExcelServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class,
     ],
 
     /*
@@ -235,7 +236,9 @@ return [
         'DepartmentService' => \App\Facades\Department::class,
         'DisciplineService' => \App\Facades\Discipline::class,
         'ManagerService' => \App\Facades\Manager::class,
-        'TeacherService' => \App\Facades\Teacher::class
+        'TeacherService' => \App\Facades\Teacher::class,
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+        'Image' => Intervention\Image\Facades\Image::class,
     ],
 
 ];

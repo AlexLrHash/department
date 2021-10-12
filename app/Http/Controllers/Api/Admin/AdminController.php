@@ -8,6 +8,7 @@ use App\Http\Filters\Admin\DepartmentFilter;
 use App\Http\Filters\Admin\DisciplineFilter;
 use App\Http\Filters\Admin\UserFilter;
 use App\Http\Requests\Api\Admin\Department\DepartmentRequest;
+use App\Http\Requests\Api\Admin\Discipline\CreateDisciplineRequest;
 use App\Http\Requests\Api\Admin\Discipline\DisciplineRequest;
 use App\Http\Requests\Api\Admin\User\UserRequest;
 use App\Http\Requests\Api\User\Discipline\AddDisciplineRequest;
@@ -131,5 +132,22 @@ class AdminController extends Controller
         $user->load(['disciplines']);
 
         return UserResource::make($user);
+    }
+
+    /**
+     * Создание дисциплины
+     *
+     * @param CreateDisciplineRequest $request
+     * @return DisciplineResource
+     */
+    public function createDiscipline(CreateDisciplineRequest $request)
+    {
+        $discipline = Discipline::create([
+            'name' => $request->get('name'),
+            'department_id' => $request->get('department_id'),
+            'description' => $request->get('description', null),
+        ]);
+
+        return DisciplineResource::make($discipline);
     }
 }

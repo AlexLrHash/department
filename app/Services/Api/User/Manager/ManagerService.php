@@ -47,6 +47,8 @@ class ManagerService extends ParserService implements ParserInterface
      */
     public function parseManagerData(Crawler $crawler)
     {
+        $managerDepartmentDescription = $crawler->filter('.czr-wp-the-content > p')->text();
+
         $managerToolbar = $crawler->filter('.sek-row.sek-sektion-inner');
 
         $managerInfoSection = $managerToolbar->filter('.sek-column.sek-col-base.sek-col-33 > div > div');
@@ -68,7 +70,7 @@ class ManagerService extends ParserService implements ParserInterface
         return [
             'managerName' => $managerName,
             'managerAvatar' => $managerAvatar,
-            'managerDepartmentData' => $managerDepartmentData
+            'managerDepartmentData' => array_merge($managerDepartmentData, ['managerDepartmentDescription' => $managerDepartmentDescription]),
         ];
     }
 
@@ -119,6 +121,7 @@ class ManagerService extends ParserService implements ParserInterface
         if (!$managerDepartment && $managerDepartmentName) {
             Department::create([
                 'name' => $managerDepartmentName,
+                'description' => Arr::get($managerDepartmentData, 'managerDepartmentDescription', ''),
                 'manager_id' => $manager->id
             ]);
         } else {

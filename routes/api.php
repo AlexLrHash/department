@@ -38,13 +38,16 @@ Route::get('/vk/auth/', [\App\Http\Controllers\Api\Auth\SocialController::class,
 Route::get('/vk/auth/callback', [\App\Http\Controllers\Api\Auth\SocialController::class, 'callback'])->name('vk.auth.callback');
 
 // Departments
-Route::get('/departments', [\App\Http\Controllers\Api\Department\DepartmentController::class, 'index'])->name('disciplines.index');
-Route::get('/departments/{departmentSecondId}', [\App\Http\Controllers\Api\Department\DepartmentController::class, 'show'])->name('disciplines.show');
+Route::get('/departments', [\App\Http\Controllers\Api\Department\DepartmentController::class, 'index'])->name('departments.index');
+Route::get('/departments/{departmentSecondId}', [\App\Http\Controllers\Api\Department\DepartmentController::class, 'show'])->name('departments.show');
+Route::get('/departments/export/excel', [\App\Http\Controllers\Api\Department\DepartmentController::class, 'exportExcel'])->name('departments.export.excel');
 
 // Disciplines
 Route::get('/disciplines', [\App\Http\Controllers\Api\Discipline\DisciplineController::class, 'index'])->name('disciplines.index');
 Route::get('/disciplines/{disciplineSecondId}', [\App\Http\Controllers\Api\Discipline\DisciplineController::class, 'show'])->name('disciplines.show');
 Route::get('/disciplines/export/pdf', [\App\Http\Controllers\Api\Discipline\DisciplineController::class, 'exportPdf'])->name('disciplines.export.pdf');
+Route::get('/disciplines/export/excel', [\App\Http\Controllers\Api\Discipline\DisciplineController::class, 'exportExcel'])->name('disciplines.export.excel');
+Route::get('/disciplines/import/excel', [\App\Http\Controllers\Api\Discipline\DisciplineController::class, 'importExcel'])->name('disciplines.import.excel');
 Route::get('/disciplines/teachers/{disciplineSecondId}', [\App\Http\Controllers\Api\Discipline\DisciplineController::class, 'teachers'])->name('disciplines.teachers');
 
 // Managers
@@ -55,3 +58,4 @@ Route::get('/managers/{managerId}', [\App\Http\Controllers\Api\User\ManagerContr
 Route::get('/teachers', [\App\Http\Controllers\Api\User\TeacherController::class, 'index'])->name('teachers.index');
 Route::get('/teachers/{teacherSecondId}', [\App\Http\Controllers\Api\User\TeacherController::class, 'show'])->name('teachers.show');
 Route::get('/teachers/departments/grouped', [\App\Http\Controllers\Api\User\TeacherController::class, 'getGroupedTeachersByDepartments'])->name('teachers.disciplines.grouped');
+Route::get('/teachers/export/excel', [\App\Http\Controllers\Api\User\TeacherController::class, 'exportExcel'])->name('teachers.export.excel');

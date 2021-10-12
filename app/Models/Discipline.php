@@ -18,7 +18,9 @@ class Discipline extends Model
      */
     protected $fillable = [
         'name',
-        'department_id'
+        'department_id',
+        'description',
+        'background'
     ];
 
     /**
