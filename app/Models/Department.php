@@ -11,7 +11,7 @@ class Department extends Model
     use HasFactory, Filterable;
 
     /**
-     * The attributes that are mass assignable.
+     * Поля для заполнения через метод create.
      *
      * @var string[]
      */
@@ -21,7 +21,7 @@ class Department extends Model
     ];
 
     /**
-     * Getting manager
+     * Получение мэнеджера
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */

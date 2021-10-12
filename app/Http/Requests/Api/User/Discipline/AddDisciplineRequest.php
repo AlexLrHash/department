@@ -24,8 +24,8 @@ class AddDisciplineRequest extends FormRequest
     public function rules()
     {
         return [
-            'number_of_practices' => ['required'],
-            'number_of_labs' => ['required']
+            'number_of_practices' => ['required', 'integer'],
+            'number_of_labs' => ['required', 'integer']
         ];
     }
 
@@ -38,7 +38,9 @@ class AddDisciplineRequest extends FormRequest
     {
         return [
             'number_of_practices.required' => trans('validation.disciplines.number_of_practices.required'),
-            'number_of_labs.required' => trans('validation.disciplines.number_of_labs.required')
+            'number_of_practices.integer'  => trans('validation.disciplines.integer'),
+            'number_of_labs.required'      => trans('validation.disciplines.number_of_labs.required'),
+            'number_of_labs.integer'       => trans('validation.disciplines.integer'),
         ];
     }
 }

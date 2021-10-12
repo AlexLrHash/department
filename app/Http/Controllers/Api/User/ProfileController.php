@@ -4,17 +4,14 @@ namespace App\Http\Controllers\Api\User;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\User\Profile\UpdateProfileRequest;
-use App\Http\Requests\Api\User\Profile\UploadAvatarRequest;
 use App\Http\Resources\Api\User\UserResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {
     /**
-     * Get user data
+     * Получение пользователя
      *
      * @return UserResource
      */
@@ -24,7 +21,7 @@ class ProfileController extends Controller
     }
 
     /**
-     * Update profile data
+     * Изменение профиля пользователя
      *
      * @param UpdateProfileRequest $request
      * @return UserResource
@@ -40,7 +37,7 @@ class ProfileController extends Controller
     }
 
     /**
-     * Download Avatar
+     * Скачивание картинки
      *
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
@@ -58,7 +55,7 @@ class ProfileController extends Controller
     }
 
     /**
-     * Upload Image
+     * Изменение картинки
      *
      * @param Request $request
      * @return UserResource

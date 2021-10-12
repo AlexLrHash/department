@@ -10,27 +10,10 @@ use UserService;
 class UserListener
 {
     /**
-     * Create the event listener.
+     * Создание пользователя
      *
-     * @return void
+     * @param User $user
      */
-    public function __construct()
-    {
-        //
-    }
-
-    /**
-     * Handle the event.
-     *
-     * @param  object  $event
-     * @return void
-     */
-    public function handle($event)
-    {
-        //
-    }
-
-
     public function creating(User $user)
     {
         $user->second_id = UserService::generateSecondId();

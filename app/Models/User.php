@@ -85,7 +85,7 @@ class User extends Authenticatable
     }
 
     /**
-     * Teachers
+     * Получение преподавателей
      *
      * @param Builder $builder
      */

@@ -14,7 +14,7 @@ class VerifyUserEmail extends Mailable
     protected $verifyToken;
 
     /**
-     * Create a new message instance.
+     * Констроктор.
      *
      * @return void
      */
@@ -24,7 +24,7 @@ class VerifyUserEmail extends Mailable
     }
 
     /**
-     * Build the message.
+     * Создание сообщения.
      *
      * @return $this
      */

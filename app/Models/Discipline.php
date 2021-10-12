@@ -18,10 +18,11 @@ class Discipline extends Model
      */
     protected $fillable = [
         'name',
+        'department_id'
     ];
 
     /**
-     * Getting teachers of discipline
+     * Получение преподователей дисциплины
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */

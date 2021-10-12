@@ -16,10 +16,12 @@ class DisciplineTableSeeder extends Seeder
     {
         Discipline::create([
            'name' => 'Резка по дереву',
+            'department_id' => 4
         ]);
 
         Discipline::create([
             'name' => 'ТРПО',
+            'department_id' => 1
         ]);
     }
 }

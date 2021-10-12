@@ -18,6 +18,7 @@ class CreateDisciplinesTable extends Migration
             $table->bigIncrements('id');
             $table->string('name')->index();
             $table->longText('description')->nullable()->default(null);
+            $table->unsignedBigInteger('department_id')->nullable()->default(null);
             $table->integer('second_id');
             $table->string('background')->default(DefaultUrlEnum::DISCIPLINE_DEFAULT_BACKGROUND_URL);
             $table->timestamps();
