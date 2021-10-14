@@ -10,6 +10,8 @@ use App\Http\Filters\Admin\UserFilter;
 use App\Http\Requests\Api\Admin\Department\DepartmentRequest;
 use App\Http\Requests\Api\Admin\Discipline\CreateDisciplineRequest;
 use App\Http\Requests\Api\Admin\Discipline\DisciplineRequest;
+use App\Http\Requests\Api\Admin\User\CreateUserRequest;
+use App\Http\Requests\Api\Admin\User\UpdateUserRequest;
 use App\Http\Requests\Api\Admin\User\UserRequest;
 use App\Http\Requests\Api\User\Discipline\AddDisciplineRequest;
 use App\Http\Resources\Api\Admin\Department\DepartmentResource;
@@ -19,6 +21,9 @@ use App\Models\Department;
 use App\Models\Discipline;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
+use Intervention\Image\Facades\Image;
 
 class AdminController extends Controller
 {
@@ -149,5 +154,87 @@ class AdminController extends Controller
         ]);
 
         return DisciplineResource::make($discipline);
+    }
+
+    /**
+     * Удаление дисциплины
+     *
+     * @param $disciplineSecondId
+     * @return DisciplineResource
+     */
+    public function deleteDiscipline($disciplineSecondId)
+    {
+        $discipline = Discipline::where('second_id', $disciplineSecondId)->firstOrFail();
+        $discipline->delete();
+
+        return DisciplineResource::make($discipline);
+    }
+
+    /**
+     * Изменение дисциплины
+     *
+     * @param CreateDisciplineRequest $request
+     * @param $disciplineSecondId
+     * @return DisciplineResource
+     */
+    public function updateDiscipline(CreateDisciplineRequest $request, $disciplineSecondId)
+    {
+        $discipline = Discipline::where('second_id', $disciplineSecondId)->firstOrFail();
+        $discipline->fill($request->only('name', 'department_id', 'description'));
+        $discipline->save();
+
+        return DisciplineResource::make($discipline);
+    }
+
+    /**
+     * Создание пользователя
+     *
+     * @param CreateUserRequest $request
+     */
+    public function createUser(CreateUserRequest $request)
+    {
+//        $path = $request->file('avatar')->store('public/avatars/users');
+
+        $user = User::create([
+            'name'     => $request->get('name'),
+            'role'     => $request->get('role'),
+            'email'    => $request->get('email'),
+            'phone'    => preg_replace('/[^0-9]/', '', $request->get('phone')),
+            'password' => Hash::make(Str::random(24)),
+//            'avatar' => config('app.url') . str_replace('public', '/storage', $path)
+        ]);
+
+        return UserResource::make($user);
+    }
+
+    /**
+     * Удаление пользователя
+     *
+     * @param $userSecondId
+     * @return UserResource
+     */
+    public function deleteUser($userSecondId)
+    {
+        $user = User::where('second_id', $userSecondId)->firstOrFail();
+        $user->delete();
+
+        return UserResource::make($user);
+    }
+
+    /**
+     * Изменение пользователя
+     *
+     * @param UpdateUserRequest $request
+     * @param $userSecondId
+     * @return UserResource
+     */
+    public function updateUser(UpdateUserRequest $request, $userSecondId)
+    {
+        $user = User::where('second_id', $userSecondId)->firstOrFail();
+
+        $user->fill($request->only('name', 'role', 'email', 'phone'));
+        $user->save();
+
+        return UserResource::make($user);
     }
 }

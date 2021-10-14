@@ -26,6 +26,9 @@ Route::group(['middleware' => 'auth:sanctum'], function() {
     // Verification
     Route::post('/user/token/verify/resend', [\App\Http\Controllers\Api\Auth\RegisterController::class, 'resendEmail'])->name('user.token.verify.resend');
     Route::post('/user/token/verify/', [\App\Http\Controllers\Api\Auth\RegisterController::class, 'verifyEmail'])->name('auth.token.verify');
+
+    // Like
+    Route::post('/teachers/{teacher}/like', [\App\Http\Controllers\Api\Like\LikeController::class, 'teacherLike'])->name('teachers.like');
 });
 
 // Register

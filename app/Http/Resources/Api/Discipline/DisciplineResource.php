@@ -17,7 +17,7 @@ class DisciplineResource extends JsonResource
         return [
             'id' => $this->second_id,
             'name' => $this->name,
-            'description' => $this->descriptions,
+            'description' => $this->description,
             'background' => $this->background,
             'teachers' => DisciplineTeacherResource::collection($this->teachers)
         ];

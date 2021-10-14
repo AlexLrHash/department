@@ -31,6 +31,7 @@ class UserResource extends JsonResource
             'disciplines' => TeacherDisciplineResource::collection($this->disciplines),
             'common_number_of_labs' => $commonNumberOfLabs,
             'common_number_of_practices' => $commonNumberOfPractices,
+            'phone' => $this->phone,
             'avatar' => $this->avatar
         ];
     }

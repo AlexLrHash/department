@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
+use App\Classes\Enum\Api\Like\LikeValueEnum;
 use App\Classes\Enum\Api\User\UserRoleEnum;
 use App\Models\Traits\Filterable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -27,6 +29,7 @@ class User extends Authenticatable
         'password',
         'status',
         'avatar',
+        'phone',
         'verify_token',
         'is_consent_privacy_policy',
         'is_consent_terms_of_use'
@@ -92,5 +95,25 @@ class User extends Authenticatable
     public function scopeTeachers(Builder $builder)
     {
         $builder->where('role', UserRoleEnum::TEACHER);
+    }
+
+    /**
+     *  Получение количества лайков
+     *
+     * @return int
+     */
+    public function getCountLikesAttribute() : int
+    {
+        return count($this->likes);
+    }
+
+    /**
+     * Лайки
+     *
+     * @return BelongsToMany
+     */
+    public function likes() : BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'likes', 'foreign_id', 'user_id')->where('value', LikeValueEnum::LIKE);
     }
 }

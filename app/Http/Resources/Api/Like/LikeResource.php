@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Http\Resources\Api\User;
+namespace App\Http\Resources\Api\Like;
 
-use App\Http\Resources\Api\Department\DepartmentResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class UserResource extends JsonResource
+class LikeResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,11 +15,10 @@ class UserResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id' => $this->second_id,
-            'name' => $this->name,
-            'email' => $this->email,
-            'avatar' => $this->avatar,
-            'phone' => $this->phone,
+            'type' => trans('like.types.' . $this->type),
+            'user' => $this->user,
+            'foreign_id' => $this->foreign_id,
+            'value' => $this->value
         ];
     }
 }

@@ -20,6 +20,8 @@ class TeacherResource extends JsonResource
             'name' => $this->name,
             'email' => $this->email,
             'avatar' => $this->avatar,
+            'phone' => $this->phone,
+            'count_likes' => $this->countLikes,
             'disciplines' => TeacherDisciplineResource::collection($this->disciplines)
         ];
     }
