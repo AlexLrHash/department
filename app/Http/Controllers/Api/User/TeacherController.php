@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\User;
 use App\Exports\TeachersExport;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Api\User\Teacher\TeacherResource;
+use App\Models\Group;
 use App\Models\User;
 use Illuminate\Support\Facades\Request;
 use Maatwebsite\Excel\Facades\Excel;

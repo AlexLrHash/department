@@ -19,9 +19,11 @@ use App\Http\Requests\Api\User\Discipline\AddDisciplineRequest;
 use App\Http\Resources\Api\Admin\Department\DepartmentResource;
 use App\Http\Resources\Api\Admin\Discipline\DisciplineResource;
 use App\Http\Resources\Api\Admin\User\UserResource;
+use App\Http\Resources\Api\Like\LikeResource;
 use App\Http\Resources\Api\User\Manager\ManagerResource;
 use App\Models\Department;
 use App\Models\Discipline;
+use App\Models\Like;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -305,5 +307,32 @@ class AdminController extends Controller
         $managers = User::managers()->get();
 
         return ManagerResource::collection($managers);
+    }
+
+    /**
+     * Получаем лайки
+     *
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     */
+    public function likesTeacher()
+    {
+        $liked = Like::get();
+
+        return LikeResource::collection($liked);
+    }
+
+    /**
+     * Удаление лайков
+     *
+     * @param $likeSecondId
+     * @return LikeResource
+     */
+    public function deleteLike($likeSecondId)
+    {
+        $like = Like::where("second_id", $likeSecondId)->firstOrFail();
+
+        $like->delete();
+
+        return LikeResource::make($like);
     }
 }

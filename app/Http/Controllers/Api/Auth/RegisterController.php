@@ -34,7 +34,8 @@ class RegisterController extends Controller
             'password' => Hash::make($request->get('password')),
             'is_consent_privacy_policy' => $request->get('is_consent_privacy_policy', 0),
             'is_consent_terms_of_use' => $request->get('is_consent_terms_of_use', 0),
-            'verify_token' => Str::random(24)
+            'verify_token' => Str::random(24),
+            'role' => $request->get('role')
         ]);
 
         $jwtToken = $user->createToken('token')->plainTextToken;

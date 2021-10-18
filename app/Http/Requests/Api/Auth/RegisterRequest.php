@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests\Api\Auth;
 
+use App\Classes\Enum\Api\User\UserRoleEnum;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class RegisterRequest extends FormRequest
 {
@@ -28,7 +30,8 @@ class RegisterRequest extends FormRequest
             'email' => ['required', 'unique:users', 'email'],
             'password' => ['required', 'confirmed'],
             'is_consent_privacy_policy' => ['sometimes', 'required', 'boolean'],
-            'is_consent_terms_of_use' => ['sometimes', 'required', 'boolean']
+            'is_consent_terms_of_use' => ['sometimes', 'required', 'boolean'],
+            'role' => ['required', Rule::in(array_values(UserRoleEnum::lists()))]
         ];
     }
 
@@ -47,7 +50,9 @@ class RegisterRequest extends FormRequest
             'email.email'        => trans('validation.user.email.email'),
             'email.unique'       => trans('validation.user.email.unique'),
             'password.required'  => trans('validation.user.password.required'),
-            'password.confirmed' => trans('validation.user.password.confirmed')
+            'password.confirmed' => trans('validation.user.password.confirmed'),
+            'role.required'      => trans('validation.user.role.required'),
+            'role.in'            => trans('validation.user.role.in')
         ];
     }
 }

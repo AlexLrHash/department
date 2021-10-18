@@ -239,6 +239,7 @@ return [
         'TeacherService' => \App\Facades\Teacher::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'Image' => Intervention\Image\Facades\Image::class,
+        'LikeService'  => \App\Facades\Like::class,
     ],
 
 ];

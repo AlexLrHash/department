@@ -28,7 +28,9 @@ Route::group(['middleware' => 'auth:sanctum'], function() {
     Route::post('/user/token/verify/', [\App\Http\Controllers\Api\Auth\RegisterController::class, 'verifyEmail'])->name('auth.token.verify');
 
     // Like
-    Route::post('/teachers/{teacher}/like', [\App\Http\Controllers\Api\Like\LikeController::class, 'teacherLike'])->name('teachers.like');
+    Route::group(['middleware' => 'check.active'], function () {
+        Route::post('/teachers/{teacher}/like', [\App\Http\Controllers\Api\Like\LikeController::class, 'teacherLike'])->name('teachers.like');
+    });
 
     // Student
     Route::get('/students/params', [\App\Http\Controllers\Api\User\StudentController::class, 'getParams'])->name('students.params');

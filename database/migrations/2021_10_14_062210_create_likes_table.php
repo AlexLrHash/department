@@ -19,6 +19,7 @@ class CreateLikesTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('foreign_id');
             $table->boolean('value');
+            $table->unsignedBigInteger('second_id');
             $table->softDeletes();
             $table->timestamps();
         });

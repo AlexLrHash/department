@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Api\Like;
 
+use App\Http\Resources\Api\Admin\User\UserResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class LikeResource extends JsonResource
@@ -15,9 +16,10 @@ class LikeResource extends JsonResource
     public function toArray($request)
     {
         return [
+            'id' => $this->second_id,
             'type' => trans('like.types.' . $this->type),
-            'user' => $this->user,
-            'foreign_id' => $this->foreign_id,
+            'user' => UserResource::make($this->user),
+            'foreign' => UserResource::make($this->foreign),
             'value' => $this->value
         ];
     }

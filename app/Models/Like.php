@@ -39,4 +39,14 @@ class Like extends Model
 //        return $this->belongsToMany(User::class, 'likes', 'user_id', 'foreign_id');
 //    }
 
+    /**
+     * Получение юзера которого лайкнули
+     *
+     * @return BelongsTo
+     */
+    public function foreign()
+    {
+        return $this->belongsTo(User::class, 'foreign_id', 'id');
+    }
+
 }
