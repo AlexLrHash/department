@@ -29,6 +29,10 @@ Route::group(['middleware' => 'auth:sanctum'], function() {
 
     // Like
     Route::post('/teachers/{teacher}/like', [\App\Http\Controllers\Api\Like\LikeController::class, 'teacherLike'])->name('teachers.like');
+
+    // Student
+    Route::get('/students/params', [\App\Http\Controllers\Api\User\StudentController::class, 'getParams'])->name('students.params');
+    Route::post('/students/params/update', [\App\Http\Controllers\Api\User\StudentController::class, 'updateParams'])->name('student.params.update');
 });
 
 // Register

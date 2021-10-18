@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Http\Resources\Api\User;
+namespace App\Http\Resources\Api\User\Student;
 
-use App\Http\Resources\Api\Department\DepartmentResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class UserResource extends JsonResource
+class StudentParamResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,13 +15,9 @@ class UserResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id' => $this->second_id,
             'name' => $this->name,
-            'email' => $this->email,
-            'avatar' => $this->avatar,
-            'status' => $this->status,
-            'role' => $this->role,
-            'phone' => $this->phone,
+            'value' => $this->value,
+            'type' => $this->type,
         ];
     }
 }

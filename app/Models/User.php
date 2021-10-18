@@ -98,6 +98,16 @@ class User extends Authenticatable
     }
 
     /**
+     * Получение мэнеджеров
+     *
+     * @param Builder $builder
+     */
+    public function scopeManagers(Builder $builder)
+    {
+        $builder->where('role', UserRoleEnum::MANAGER);
+    }
+
+    /**
      *  Получение количества лайков
      *
      * @return int
@@ -115,5 +125,15 @@ class User extends Authenticatable
     public function likes() : BelongsToMany
     {
         return $this->belongsToMany(User::class, 'likes', 'foreign_id', 'user_id')->where('value', LikeValueEnum::LIKE);
+    }
+
+    /**
+     * Получение отделения
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function department()
+    {
+        return $this->hasOne(Department::class, 'manager_id', 'id');
     }
 }

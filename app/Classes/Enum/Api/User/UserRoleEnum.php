@@ -17,4 +17,7 @@ class UserRoleEnum extends Enum
 
     // администратор
     const ADMIN = "ADMIN";
+
+    // студент
+    const STUDENT = "STUDENT";
 }

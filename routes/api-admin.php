@@ -15,6 +15,9 @@ Route::post('/users/update/{user}', [\App\Http\Controllers\Api\Admin\AdminContro
 Route::post('/teachers/{teacherSecondId}/disciplines/{disciplineSecondId}/add', [\App\Http\Controllers\Api\Admin\AdminController::class, 'addDiscipline']);
 Route::post('/teachers/{teacherSecondId}/disciplines/{disciplineSecondId}/remove', [\App\Http\Controllers\Api\Admin\AdminController::class, 'removeDiscipline']);
 
+// managers
+Route::get('/managers', [\App\Http\Controllers\Api\Admin\AdminController::class, 'getManagers'])->name('admin.managers');
+
 // disciplines
 Route::get('/disciplines/', [\App\Http\Controllers\Api\Admin\AdminController::class, 'getDisciplines'])->name('admin.disciplines');
 Route::post('/disciplines/', [\App\Http\Controllers\Api\Admin\AdminController::class, 'createDiscipline'])->name('admin.disciplines.create');
@@ -23,3 +26,7 @@ Route::post('/disciplines/update/{discipline}', [\App\Http\Controllers\Api\Admin
 
 // departments
 Route::get('/departments/', [\App\Http\Controllers\Api\Admin\AdminController::class, 'getDepartments'])->name('admin.departments');
+Route::post('/departments/create', [\App\Http\Controllers\Api\Admin\AdminController::class, 'createDepartment'])->name('admin.departments.create');
+Route::post('/departments/delete/{department}', [\App\Http\Controllers\Api\Admin\AdminController::class, 'deleteDepartment'])->name('admin.departments.delete');
+Route::post('/departments/update/{department}', [\App\Http\Controllers\Api\Admin\AdminController::class, 'updateDepartment'])->name('admin.departments.update');
+

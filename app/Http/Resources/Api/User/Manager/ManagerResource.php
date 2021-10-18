@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Api\User\Manager;
 
+use App\Http\Resources\Api\Department\DepartmentResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ManagerResource extends JsonResource
@@ -18,7 +19,8 @@ class ManagerResource extends JsonResource
             'id' => $this->second_id,
             'name' => $this->name,
             'email' => $this->email,
-            'avatar' => $this->avatar
+            'avatar' => $this->avatar,
+            'department' => DepartmentResource::make($this->department)
         ];
     }
 }

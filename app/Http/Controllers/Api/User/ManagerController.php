@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\User;
 
 use App\Classes\Enum\Api\User\UserRoleEnum;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Api\User\Manager\ManagerResource;
 use App\Http\Resources\Api\User\UserResource;
 use App\Models\User;
 
@@ -27,6 +28,6 @@ class ManagerController extends Controller
      */
     public function show($secondId)
     {
-        return UserResource::make(User::where('role', UserRoleEnum::MANAGER)->where('second_id', $secondId)->firstOrFail());
+        return  ManagerResource::make(User::where('role', UserRoleEnum::MANAGER)->where('second_id', $secondId)->firstOrFail());
     }
 }

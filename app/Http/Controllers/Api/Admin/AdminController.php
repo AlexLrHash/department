@@ -7,7 +7,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Filters\Admin\DepartmentFilter;
 use App\Http\Filters\Admin\DisciplineFilter;
 use App\Http\Filters\Admin\UserFilter;
+use App\Http\Requests\Api\Admin\Department\CreateDepartmentRequest;
 use App\Http\Requests\Api\Admin\Department\DepartmentRequest;
+use App\Http\Requests\Api\Admin\Department\UpdateDepartmentRequest;
 use App\Http\Requests\Api\Admin\Discipline\CreateDisciplineRequest;
 use App\Http\Requests\Api\Admin\Discipline\DisciplineRequest;
 use App\Http\Requests\Api\Admin\User\CreateUserRequest;
@@ -17,6 +19,7 @@ use App\Http\Requests\Api\User\Discipline\AddDisciplineRequest;
 use App\Http\Resources\Api\Admin\Department\DepartmentResource;
 use App\Http\Resources\Api\Admin\Discipline\DisciplineResource;
 use App\Http\Resources\Api\Admin\User\UserResource;
+use App\Http\Resources\Api\User\Manager\ManagerResource;
 use App\Models\Department;
 use App\Models\Discipline;
 use App\Models\User;
@@ -236,5 +239,71 @@ class AdminController extends Controller
         $user->save();
 
         return UserResource::make($user);
+    }
+
+    /**
+     * Создание отделения
+     *
+     * @param CreateDepartmentRequest $request
+     * @return DepartmentResource
+     */
+    public function createDepartment(CreateDepartmentRequest $request)
+    {
+        $department = Department::create([
+            'name'        => $request->get('name'),
+            'manager_id'  => User::managers()->where('second_id', $request->get('manager_id'))->firstOrFail()->id,
+            'description' => $request->get('description')
+        ]);
+
+        return DepartmentResource::make($department);
+    }
+
+    /**
+     * Изменение отделения
+     *
+     * @param UpdateDepartmentRequest $request
+     * @param $departmentSecondId
+     * @return DepartmentResource
+     */
+    public function updateDepartment(UpdateDepartmentRequest $request, $departmentSecondId)
+    {
+        $department = Department::where('second_id', $departmentSecondId)->firstOrFail();
+
+        $department->fill([
+            'name'        => $request->get('name'),
+            'manager_id'  => User::managers()->where('second_id', $request->get('manager_id'))->firstOrFail()->id,
+            'description' => $request->get('description')
+        ]);
+
+        $department->save();
+
+        return DepartmentResource::make($department);
+    }
+
+    /**
+     * Удаление отделения
+     *
+     * @param $departmentSecondId
+     * @return DepartmentResource
+     */
+    public function deleteDepartment($departmentSecondId)
+    {
+        $department = Department::where('second_id', $departmentSecondId)->firstOrFail();
+
+        $department->delete();
+
+        return DepartmentResource::make($department);
+    }
+
+    /**
+     * Получение мэнэджеров
+     *
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     */
+    public function getManagers()
+    {
+        $managers = User::managers()->get();
+
+        return ManagerResource::collection($managers);
     }
 }
