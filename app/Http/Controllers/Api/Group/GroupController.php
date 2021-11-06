@@ -54,4 +54,37 @@ class GroupController extends Controller
 
         return GroupResource::make($group);
     }
+
+    /**
+     * Удаление группы
+     *
+     * @param $groupId
+     * @return GroupResource
+     */
+    public function deleteGroup($groupId)
+    {
+        $group = TeacherGroup::findOrFail($groupId);
+        $group->delete();
+
+        return GroupResource::make($group);
+    }
+
+    /**
+     * получение групп
+     *
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     */
+    public function getStudentGroups()
+    {
+        $currentUser = Auth::user();
+
+        return GroupResource::collection($currentUser->getStudentGroups);
+    }
+
+    public function getStudentGroup($groupId)
+    {
+        $currentUser = Auth::user();
+
+        return GroupResource::make($currentUser->getStudentGroups->where('id', $groupId)->firstOrFail());
+    }
 }

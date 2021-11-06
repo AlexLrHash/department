@@ -20,6 +20,7 @@ class CreateTeacherGroupsTable extends Migration
             $table->unsignedBigInteger('discipline_id');
             $table->text('description')->nullable()->default(null);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

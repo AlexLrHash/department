@@ -18,6 +18,7 @@ class CreateStudentGroupsTable extends Migration
             $table->unsignedBigInteger('student_id');
             $table->unsignedBigInteger('group_id');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

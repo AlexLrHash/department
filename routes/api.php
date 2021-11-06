@@ -15,19 +15,21 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(['middleware' => 'auth:sanctum'], function() {
+    Route::get('/groups', [\App\Http\Controllers\Api\Group\GroupController::class, 'getGroups'])->name('groups.index');
+    Route::get('/groups/{group}', [\App\Http\Controllers\Api\Group\GroupController::class, 'getGroup'])->name('group.show');
+
+    Route::get('/student/groups', [\App\Http\Controllers\Api\Group\GroupController::class, 'getStudentGroups'])->name('student.groups');
+    Route::get('/student/groups/{group}', [\App\Http\Controllers\Api\Group\GroupController::class, 'getStudentGroup'])->name('student.group');
 
     Route::group(['middleware' => 'check-role:TEACHER'], function() {
-        Route::get('/groups', [\App\Http\Controllers\Api\Group\GroupController::class, 'getGroups'])->name('groups.index');
-        Route::get('/groups/{group}', [\App\Http\Controllers\Api\Group\GroupController::class, 'getGroup'])->name('group.show');
         Route::post('/groups/create', [\App\Http\Controllers\Api\Group\GroupController::class, 'createGroup'])->name('groups.store');
-        Route::post('/groups/update', [\App\Http\Controllers\Api\Group\GroupController::class, 'updateGroup'])->name('groups.update');
+        Route::post('/groups/{group}/delete', [\App\Http\Controllers\Api\Group\GroupController::class, 'deleteGroup'])->name('group.delete');
 
-        Route::post('/groups/students/add', [\App\Http\Controllers\Api\Group\GroupStudentController::class, 'addStudent'])->name('groups.students.add');
-        Route::post('/groups/students/remove', [\App\Http\Controllers\Api\Group\GroupStudentController::class, 'removeStudent'])->name('groups.students.remove');
+        Route::post('/groups/{group}/students/add', [\App\Http\Controllers\Api\Group\GroupStudentController::class, 'addStudent'])->name('groups.students.add');
+        Route::post('/groups/{group}/students/remove', [\App\Http\Controllers\Api\Group\GroupStudentController::class, 'removeStudent'])->name('groups.students.remove');
 
-        Route::post('/groups/tasks/add', [\App\Http\Controllers\Api\Group\GroupTaskController::class, 'addTask'])->name('groups.tasks.add');
-        Route::post('/groups/tasks/remove', [\App\Http\Controllers\Api\Group\GroupTaskController::class, 'removeTask'])->name('groups.tasks.remove');
-        Route::post('/groups/tasks/update', [\App\Http\Controllers\Api\Group\GroupTaskController::class, 'updateTask'])->name('groups.tasks.update');
+        Route::post('/groups/{group}/tasks/add', [\App\Http\Controllers\Api\Group\GroupTaskController::class, 'addTask'])->name('groups.tasks.add');
+        Route::post('/groups/{group}/tasks/remove', [\App\Http\Controllers\Api\Group\GroupTaskController::class, 'removeTask'])->name('groups.tasks.remove');
     });
 
     // User Profile

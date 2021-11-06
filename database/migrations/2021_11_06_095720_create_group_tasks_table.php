@@ -20,6 +20,7 @@ class CreateGroupTasksTable extends Migration
             $table->text('description')->nullable()->default(null);
             $table->timestamp('expired_at');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

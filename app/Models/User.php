@@ -146,4 +146,19 @@ class User extends Authenticatable
     {
         return $this->hasMany(TeacherGroup::class, 'teacher_id', 'id');
     }
+
+    public function getStudentGroups()
+    {
+        return $this->belongsToMany(TeacherGroup::class, 'student_group', 'student_id', 'group_id');
+    }
+
+    /**
+     * Получение параметров
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function params()
+    {
+        return $this->hasMany(UserParam::class, 'user_id', 'id');
+    }
 }
