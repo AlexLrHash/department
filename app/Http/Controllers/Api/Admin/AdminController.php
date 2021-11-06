@@ -154,7 +154,7 @@ class AdminController extends Controller
     {
         $discipline = Discipline::create([
             'name' => $request->get('name'),
-            'department_id' => $request->get('department_id'),
+            'department_id' => Department::where('second_id', $request->get('department_id'))->firstOrFail()->id,
             'description' => $request->get('description', null),
         ]);
 
@@ -185,7 +185,11 @@ class AdminController extends Controller
     public function updateDiscipline(CreateDisciplineRequest $request, $disciplineSecondId)
     {
         $discipline = Discipline::where('second_id', $disciplineSecondId)->firstOrFail();
-        $discipline->fill($request->only('name', 'department_id', 'description'));
+        $discipline->fill([
+            'department_id' => Department::where('second_id', $request->get('department_id'))->firstOrFail()->id,
+            'name' => $request->get('name'),
+            'description' => $request->get('description'),
+        ]);
         $discipline->save();
 
         return DisciplineResource::make($discipline);

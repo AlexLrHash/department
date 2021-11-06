@@ -15,6 +15,21 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(['middleware' => 'auth:sanctum'], function() {
+
+    Route::group(['middleware' => 'check-role:TEACHER'], function() {
+        Route::get('/groups', [\App\Http\Controllers\Api\Group\GroupController::class, 'getGroups'])->name('groups.index');
+        Route::get('/groups/{group}', [\App\Http\Controllers\Api\Group\GroupController::class, 'getGroup'])->name('group.show');
+        Route::post('/groups/create', [\App\Http\Controllers\Api\Group\GroupController::class, 'createGroup'])->name('groups.store');
+        Route::post('/groups/update', [\App\Http\Controllers\Api\Group\GroupController::class, 'updateGroup'])->name('groups.update');
+
+        Route::post('/groups/students/add', [\App\Http\Controllers\Api\Group\GroupStudentController::class, 'addStudent'])->name('groups.students.add');
+        Route::post('/groups/students/remove', [\App\Http\Controllers\Api\Group\GroupStudentController::class, 'removeStudent'])->name('groups.students.remove');
+
+        Route::post('/groups/tasks/add', [\App\Http\Controllers\Api\Group\GroupTaskController::class, 'addTask'])->name('groups.tasks.add');
+        Route::post('/groups/tasks/remove', [\App\Http\Controllers\Api\Group\GroupTaskController::class, 'removeTask'])->name('groups.tasks.remove');
+        Route::post('/groups/tasks/update', [\App\Http\Controllers\Api\Group\GroupTaskController::class, 'updateTask'])->name('groups.tasks.update');
+    });
+
     // User Profile
     Route::get('/user', [\App\Http\Controllers\Api\User\ProfileController::class, 'getUser'])->name('user.profile');
     Route::post('/user/profile/update', [\App\Http\Controllers\Api\User\ProfileController::class, 'updateProfile'])->name('user.profile.name');

@@ -136,4 +136,14 @@ class User extends Authenticatable
     {
         return $this->hasOne(Department::class, 'manager_id', 'id');
     }
+
+    /**
+     * Получение груп преподавателя
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function getTeacherGroups()
+    {
+        return $this->hasMany(TeacherGroup::class, 'teacher_id', 'id');
+    }
 }

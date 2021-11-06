@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\User\Profile\UpdateProfileRequest;
 use App\Http\Resources\Api\User\Teacher\TeacherResource;
 use App\Http\Resources\Api\User\UserResource;
-use App\Models\Group;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image;

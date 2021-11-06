@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Http\Resources\Api\Department;
+namespace App\Http\Resources\Api\Group\Discipline;
 
-use App\Http\Resources\Api\User\Teacher\TeacherResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class DepartmentResource extends JsonResource
+class GroupDisciplineResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -20,8 +19,6 @@ class DepartmentResource extends JsonResource
             'name' => $this->name,
             'description' => $this->description,
             'background' => $this->background,
-            'manager' => DepartmentManagerResource::make($this->manager),
-            'teachers' => TeacherResource::collection($this->getTeachers())
         ];
     }
 }
