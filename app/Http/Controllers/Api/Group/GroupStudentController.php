@@ -9,6 +9,8 @@ use App\Http\Requests\Api\Group\Student\AddStudentRequest;
 use App\Http\Requests\Api\Group\Student\RemoveStudentRequest;
 use App\Http\Resources\Api\Group\GroupResource;
 use App\Http\Resources\Api\Group\Student\StudentResource;
+use App\Jobs\SendEmailAddStudentJob;
+use App\Jobs\SendEmailRemoveStudentJob;
 use App\Models\TeacherGroup;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -35,16 +37,29 @@ class GroupStudentController extends Controller
             abort(422, trans('validation.groups.students.number.is'));
         }
 
+        $job = new SendEmailAddStudentJob($student->email, $group->name, Auth::user()->name);
+        $this->dispatch($job);
+
         $group->students()->attach($student->id);
 
         return StudentResource::make($student);
     }
 
+    /**
+     * Удаление студента
+     *
+     * @param RemoveStudentRequest $request
+     * @param $groupId
+     * @return StudentResource
+     */
     public function removeStudent(RemoveStudentRequest $request, $groupId)
     {
         $group = TeacherGroup::where('teacher_id', Auth::user()->id)->findOrFail($groupId);
 
         $student = User::where('second_id', $request->get('student_id'))->firstOrFail();
+
+        $job = new SendEmailRemoveStudentJob($student->email, $group->name, Auth::user()->name);
+        $this->dispatch($job);
 
         $group->students()->detach($student->id);
 
